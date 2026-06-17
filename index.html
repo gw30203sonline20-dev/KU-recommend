@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KU 교양 추천 | 맞춤형 교양 강의 탐색 시스템</title>
+  <meta name="description" content="나에게 맞는 대학 교양 강의를 나의 관심 키워드를 기반으로 간편하게 필터링하고 추천받을 수 있는 스마트 플랫폼">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Light Orbs -->
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+
+  <div class="app-container">
+    <main>
+
+      <!-- 1. LOGIN SCREEN -->
+      <section id="login-screen" class="screen active">
+        <div class="glass-card">
+          <div class="header-area">
+            <h1><span class="gradient-text">KU Portal</span> 로그인</h1>
+            <p>학교 포털 계정 정보를 입력하여 시작하세요.</p>
+          </div>
+          
+          <form id="login-form" novalidate>
+            <div class="form-group">
+              <label for="student-id">학번</label>
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="student-id" 
+                  placeholder="10자리 학번 입력 (예: 2026123456)" 
+                  maxlength="10"
+                  autocomplete="username"
+                  required
+                >
+              </div>
+              <div id="student-id-error" class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="password">비밀번호</label>
+              <div class="input-wrapper">
+                <input 
+                  type="password" 
+                  id="password" 
+                  placeholder="비밀번호 입력 (4자리 이상)" 
+                  autocomplete="current-password"
+                  required
+                >
+              </div>
+              <div id="password-error" class="error-message"></div>
+            </div>
+
+            <button type="submit" id="btn-login" class="btn-primary">로그인</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- 2. KEYWORDS SELECTION SCREEN -->
+      <section id="keywords-screen" class="screen">
+        <div class="glass-card">
+          <div class="header-area">
+            <h1><span class="gradient-text">관심 키워드</span> 설정</h1>
+            <p>나에게 맞는 최적의 교양 과목을 매칭하기 위해<br>선호하는 키워드를 1개 이상 선택해 주세요.</p>
+          </div>
+
+          <div class="keywords-grid" id="keywords-container">
+            <div class="keyword-chip" data-tag="조별과제없음">#조별과제없음</div>
+            <div class="keyword-chip" data-tag="조별과제있음">#조별과제있음</div>
+            <div class="keyword-chip" data-tag="절대평가">#절대평가</div>
+            <div class="keyword-chip" data-tag="시험없음">#시험없음</div>
+            <div class="keyword-chip" data-tag="명강">#명강</div>
+            <div class="keyword-chip" data-tag="저녁수업">#저녁수업</div>
+            <div class="keyword-chip" data-tag="오전수업">#오전수업</div>
+            <div class="keyword-chip" data-tag="1교시">#1교시</div>
+          </div>
+
+          <button id="btn-submit-keywords" class="btn-primary disabled">다음 단계 (분야 설정)</button>
+        </div>
+      </section>
+
+      <!-- 3. INTEREST FIELDS SELECTION SCREEN -->
+      <section id="fields-screen" class="screen">
+        <div class="glass-card">
+          <div class="header-area">
+            <h1><span class="gradient-text">관심 분야</span> 설정</h1>
+            <p>자신이 관심 있는 교양 강의 분야를<br>최소 1개 이상 선택해 주세요.</p>
+          </div>
+
+          <div class="fields-list" id="fields-container">
+            <label class="field-checkbox-label">
+              <input type="checkbox" name="interest-field" value="인문" class="field-checkbox-input">
+              <span class="custom-checkbox"></span>
+              <span class="field-text">인문</span>
+            </label>
+            <label class="field-checkbox-label">
+              <input type="checkbox" name="interest-field" value="철학" class="field-checkbox-input">
+              <span class="custom-checkbox"></span>
+              <span class="field-text">철학</span>
+            </label>
+            <label class="field-checkbox-label">
+              <input type="checkbox" name="interest-field" value="예술" class="field-checkbox-input">
+              <span class="custom-checkbox"></span>
+              <span class="field-text">예술</span>
+            </label>
+            <label class="field-checkbox-label">
+              <input type="checkbox" name="interest-field" value="컴퓨터공학" class="field-checkbox-input">
+              <span class="custom-checkbox"></span>
+              <span class="field-text">컴퓨터공학</span>
+            </label>
+            <label class="field-checkbox-label">
+              <input type="checkbox" name="interest-field" value="자연과학" class="field-checkbox-input">
+              <span class="custom-checkbox"></span>
+              <span class="field-text">자연과학</span>
+            </label>
+            <label class="field-checkbox-label">
+              <input type="checkbox" name="interest-field" value="외국어" class="field-checkbox-input">
+              <span class="custom-checkbox"></span>
+              <span class="field-text">외국어</span>
+            </label>
+          </div>
+
+          <button id="btn-submit-fields" class="btn-primary disabled">교양 강의 추천받기</button>
+        </div>
+      </section>
+
+      <!-- 4. LOADING SCREEN -->
+      <section id="loading-screen" class="screen">
+        <div class="glass-card">
+          <div class="spinner-container">
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring-inner"></div>
+            <div class="spinner-dot"></div>
+          </div>
+          <div class="loading-text gradient-text">학생의 선호도를 분석하는 중</div>
+          <p class="loading-subtext">빅데이터를 기반으로 최적의 매칭 교양을 추출하고 있습니다...</p>
+        </div>
+      </section>
+
+      <!-- 4. RESULT RECOMMENDATION SCREEN -->
+      <section id="result-screen" class="screen">
+        <div class="result-header">
+          <div>
+            <h1><span class="gradient-text">추천 교양 강의</span> 목록</h1>
+            <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">회원님을 위한 맞춤형 매칭 결과입니다.</p>
+          </div>
+          <button id="btn-restart" class="btn-secondary">키워드 재설정</button>
+        </div>
+
+        <div class="selected-tags-summary" id="tags-summary">
+          <span>선택한 키워드:</span>
+          <!-- Selected keyword tags will be inserted here -->
+        </div>
+
+        <div class="course-list" id="recommendation-list">
+          <!-- Course cards will be inserted here dynamically -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Load Data and Scripts -->
+  <script src="courses.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
